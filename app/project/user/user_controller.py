@@ -21,7 +21,8 @@ class UserList(Resource):
     @api.expect(_user, validate=True)
     def post(self):
         """Creates a new User """
-        return UserService.save_user(request.json)
+        user_service = UserService()
+        return user_service.create_user(request.json)
 
 
 @api.route('/<public_id>')
@@ -32,8 +33,9 @@ class User(Resource):
     @api.marshal_with(_user)
     def get(self, public_id):
         """get a user given its identifier"""
-        user = UserService.get_user(public_id)
-        if user is None:
+        user_service = UserService()
+        user_service.load_user(public_id)
+        if user_service.is_nan_user():
             api.abort(404)
         else:
-            return user
+            return user_service.get_user()

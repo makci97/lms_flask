@@ -15,7 +15,7 @@ class User(db.Model):
     surname = db.Column(db.String(64), nullable=False)
     middle_name = db.Column(db.String(64), nullable=True, default=None)
 
-    email = db.Column(db.String(120), nullable=False, unique=True)
+    email = db.Column(db.String(120), unique=True)
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
 
