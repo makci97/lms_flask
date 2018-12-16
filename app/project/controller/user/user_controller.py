@@ -21,7 +21,7 @@ class UserList(Resource):
     @api.expect(_user, validate=True)
     def post(self):
         """Creates a new User """
-        return UserService.save_new_user(request.json)
+        return UserService.save_user(request.json)
 
 
 @api.route('/<public_id>')

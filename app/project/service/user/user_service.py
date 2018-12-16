@@ -34,7 +34,7 @@ class UserService:
         db.session.commit()
 
     @staticmethod
-    def save_new_user(request):
+    def save_user(request):
         if UserService.is_new(request):
             new_user = UserService.create_model_object(request)
             UserService.apply_changes(new_user)
