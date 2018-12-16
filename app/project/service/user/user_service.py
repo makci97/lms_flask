@@ -2,7 +2,7 @@ import datetime
 import uuid
 
 from app.project import db
-from app.project.model.user import User
+from app.project.model.user.user import User
 
 
 # admin = db.Column(db.Boolean, nullable=False, default=False)
