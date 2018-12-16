@@ -3,8 +3,8 @@ import datetime
 import jwt
 
 from app.project import db
+from app.project.blacklist.blacklist_model import BlacklistToken
 from app.project.config import key
-from app.project.model.blacklist.blacklist import BlacklistToken
 
 
 class BlacklistService:

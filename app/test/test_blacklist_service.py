@@ -2,7 +2,7 @@ import datetime
 import unittest
 
 from app.project import db
-from app.project.service.blacklist.blacklist_service import BlacklistService
+from app.project.blacklist.blacklist_service import BlacklistService
 from app.project.user.user_model import User
 from app.project.user.user_service import UserService
 from app.test.base import BaseTestCase
