@@ -38,4 +38,4 @@ class User(Resource):
         if user_service.is_nan_user():
             api.abort(404)
         else:
-            return user_service.get_user()
+            return user_service.get_user_public()
