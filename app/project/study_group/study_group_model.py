@@ -13,6 +13,9 @@ class StudyGroup(db.Model):
     faculty_name = db.Column(db.String(64), nullable=False)
 
     students = db.relationship('student', backref='study_group', lazy='dynamic')
+    courses = db.relationship(
+        'StudyCourses', secondary='courses_and_groups', backref=db.backref('courses', lazy='dynamic'), lazy='subquery'
+    )
 
     def __repr__(self):
         return f'StudyGroup {self.group_name}'
