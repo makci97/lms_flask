@@ -6,3 +6,6 @@ class Teacher(USER_MODEL_CLASS):
     __tablename__ = "teacher"
 
     # study_course: StudyCourse
+
+    def __repr__(self):
+        return f'Teacher {self.name} {self.surname}'
