@@ -41,7 +41,6 @@ class UserService:
     def get_user_profile(self):
         user_profile = dict(
             public_id=self.user.public_id,
-            username=self.user.username,
             name=self.user.name,
             surname=self.user.surname,
             middle_name=self.user.middle_name,
@@ -78,7 +77,6 @@ class UserService:
     def _make_user_public(user):
         user_public = dict(
             public_id=user.public_id,
-            username=user.username,
             name=user.name,
             surname=user.surname,
             middle_name=user.middle_name,
