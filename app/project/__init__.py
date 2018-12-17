@@ -15,3 +15,7 @@ def create_app(config_name):
     flask_bcrypt.init_app(app)
 
     return app
+
+from app.project.user.user_model import User
+
+USER_MODEL_CLASS = User
