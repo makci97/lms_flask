@@ -6,6 +6,10 @@ from flask_script import Manager
 
 from app import blueprint
 from app.project import create_app, db
+from app.project.user.user_model import User
+from app.project.student.student_model import Student
+from app.project.teacher.teacher_model import Teacher
+from app.project.study_group.study_group_model import StudyGroup
 
 app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
 app.register_blueprint(blueprint)
