@@ -54,6 +54,13 @@ class UserService:
         return user_profile
 
     @staticmethod
+    def check_email_password_pair(email, password):
+        user = User.query.filter_by(email=email).first()
+        if user is not None:
+            return user.check_password(password)
+        return False
+
+    @staticmethod
     def get_all_users():
         return list(map(UserService._make_user_public, User.query.all()))
 
