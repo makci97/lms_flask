@@ -1,6 +1,8 @@
 from flask import request
 from flask_restplus import Resource
 
+from app.project.auth import auth
+from app.project.auth.auth_service import AuthService
 from app.project.user.user_dto import UserDto
 from app.project.user.user_service import UserService
 
@@ -16,11 +18,13 @@ class UserList(Resource):
         """List all registered users"""
         return UserService.get_all_users()
 
+    @auth.login_required
+    @AuthService.admin_permission_required
     @api.response(201, 'User successfully created.')
-    @api.doc('create a new user')
+    @api.doc('create a new user(only for admin)')
     @api.expect(_user, validate=True)
     def post(self):
-        """Creates a new User """
+        """Creates a new User(only for admin) """
         user_service = UserService()
         return user_service.create_user(request.json)
 

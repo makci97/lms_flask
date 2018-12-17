@@ -1,18 +1,18 @@
 from functools import wraps
 
-from app.project.user.user_model import User
+from app.project.user.user_service import UserService
 from . import auth
 
 
 class AuthService:
     @staticmethod
     def check_email_password_pair(email, password):
-        user = User.query.filter_by(email=email).first()
+        user = UserService.get_user_by_email(email)
         return (user is not None) and user.check_password(password)
 
     @staticmethod
     def is_admin(email):
-        user = User.query.filter_by(email=email).first()
+        user = UserService.get_user_by_email(email)
         return (user is not None) and user.admin
 
     @staticmethod
@@ -30,3 +30,8 @@ class AuthService:
             return f(*args, **kwargs)
 
         return decorated
+
+    @staticmethod
+    def sign_up_user(data):
+        user_service = UserService()
+        return user_service.sign_up(data)

@@ -35,6 +35,10 @@ class UserService:
     def is_nan_user(self):
         return self.user is None
 
+    @staticmethod
+    def get_user_by_email(email):
+        return User.query.filter_by(email=email).first()
+
     def get_user_public(self):
         return UserService._make_user_public(self.user)
 
@@ -54,6 +58,43 @@ class UserService:
     def get_all_users():
         return list(map(UserService._make_user_public, User.query.all()))
 
+    def sign_up(self, data):
+        self.user = User.query.filter_by(verification_code=data.get('verification_code')).first()
+        if self.is_nan_user():
+            response_object = {
+                'status': 'fail',
+                'message': 'verification_code does not match.'
+            }
+            return response_object, 401
+        if self._verify_sign_up(data):
+            try:
+                self.user.email = data.get('email')
+                self.user.password = data.get('password')
+                response_object = {
+                    'status': 'success',
+                    'message': 'Successfully sign up.'
+                }
+                return response_object, 200
+            except Exception as e:
+                print(e)
+                response_object = {
+                    'status': 'fail',
+                    'message': 'Try again'
+                }
+                return response_object, 500
+
+        else:
+            response_object = {
+                'status': 'fail',
+                'message': 'email or password does not exist.'
+            }
+            return response_object, 401
+
+
+
+    def _verify_sign_up(self, data):
+        return 'verification_code' in data and 'email' in data and 'password' in data
+
     @staticmethod
     def _data_verification(data):
         if 'name' not in data or 'surname' not in data:
@@ -61,12 +102,12 @@ class UserService:
         return True
 
     def _create_model_object(self, data):
-        user_data = dict(
+        user_data = data.copy()
+        user_data.update(dict(
             public_id=str(uuid.uuid4()),
             verification_code=str(uuid.uuid4()),
             registered_on=datetime.datetime.utcnow()
-        )
-        user_data.update(data)
+        ))
         self.user = User(**user_data)
 
     def _save_changes(self):
